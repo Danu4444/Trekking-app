@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mt. Kinetics</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <img src="img/logo.jpg" alt="Mt. Kinetics Logo">
+                <h1><span class="highlight">Mt.</span> Kinetics</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="logout.php">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="main-content">
+            <div class="intro-section">
+                <h2>Welcome Back, Adventurer!</h2>
+                <p>
+                    Log in to access your personal dashboard, view your bookings, manage your profile, and embark on new journeys with Mt. Kinetics.
+                </p>
+            </div>
+
+            <div class="login-form-section">
+                <form action="php/login.php" method="POST">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                </form>
+                
+                <p class="form-bottom-text">
+                    Don't have an account? <a href="register.html">Register here</a>
+                </p>
+                <p class="form-bottom-text">
+                    <a href="forget.html">Forgot your password?</a>
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Mt. Kinetics &copy; 2025</p>
+    </footer>
+</body>
+</html>

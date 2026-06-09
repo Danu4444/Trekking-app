@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Manage Users</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <h2>Registered Users</h2>
+  <div id="user-list"></div>
+
+  <script>
+    fetch('../../php/get_users.php')
+    .then(res => res.json())
+    .then(users => {
+      let html = '';
+      users.forEach(u => {
+        html += `
+          <div>
+            <p>${u.name} (${u.email}) 
+            <a href="../../php/delete_user.php?id=${u.user_id}">[Delete]</a></p>
+          </div>`;
+      });
+      document.getElementById('user-list').innerHTML = html;
+    });
+  </script>
+</body>
+</html>

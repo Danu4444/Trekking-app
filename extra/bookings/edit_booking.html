@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Edit Booking</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <h2>Edit Booking</h2>
+  <form id="editForm" action="../../php/edit_booking.php" method="POST">
+    <input type="hidden" name="booking_id" id="booking_id">
+    <select name="status" id="status">
+      <option value="Confirmed">Confirmed</option>
+      <option value="Cancelled">Cancelled</option>
+    </select><br>
+    <button type="submit">Update Booking</button>
+  </form>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    fetch(`../../php/get_booking.php?id=${id}`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('booking_id').value = data.booking_id;
+      document.getElementById('status').value = data.status;
+    });
+  </script>
+</body>
+</html>

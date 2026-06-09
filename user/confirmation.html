@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed! - Mt. Kinetics</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <img src="../img/logo.jpg" alt="Mt. Kinetics Logo">
+                <h1><span class="highlight">Mt.</span> Kinetics</h1>
+            </div>
+            <nav>
+                <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="view_treks.html">View Treks</a></li> 
+        <li><a href="book_trek.html">Book Treks</a></li>
+          <li><a href="profile.html">Update Profile</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="../logout.php">Logout</a></li>
+        
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="main-content">
+            <div class="confirmation-section">
+                <h2 class="confirmation-title">🎉 Booking Confirmed! 🎉</h2>
+                <p class="confirmation-message">
+                    Thank you for booking your adventure with Mt. Kinetics! Your trek has been successfully reserved.
+                    You will receive an email shortly with all the details of your booking, including trek itinerary,
+                    packing list, and meeting points.
+                </p>
+                <p class="confirmation-details">
+                    <strong>Trek Name:</strong> <span id="confirmed-trek-name">Your Selected Trek</span><br>
+                    <strong>Start Date:</strong> <span id="confirmed-trek-date">YYYY-MM-DD</span><br>
+                    <strong>Participants:</strong> <span id="confirmed-trek-participants">X</span>
+                </p>
+                <div class="confirmation-actions">
+                    <a href="index.html" class="btn">Back to Home</a>
+                    <a href="view_treks.html" class="btn">Explore More Treks</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Mt. Kinetics &copy; 2025</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // In a real application, booking details would be passed from the backend
+            // For this frontend-only simulation, we'll try to get them from localStorage
+            // (Note: localStorage is NOT secure for sensitive data and is for demo only)
+            const bookingDetails = JSON.parse(localStorage.getItem('latestBookingDetails'));
+
+            if (bookingDetails) {
+                document.getElementById('confirmed-trek-name').textContent = bookingDetails.trekName || 'N/A';
+                document.getElementById('confirmed-trek-date').textContent = bookingDetails.bookingDate || 'N/A';
+                document.getElementById('confirmed-trek-participants').textContent = bookingDetails.numParticipants || 'N/A';
+            } else {
+                document.getElementById('confirmed-trek-name').textContent = 'Please check your email';
+                document.getElementById('confirmed-trek-date').textContent = 'for details';
+                document.getElementById('confirmed-trek-participants').textContent = '';
+            }
+
+            // Clear the stored details after displaying them
+            localStorage.removeItem('latestBookingDetails');
+        });
+    </script>
+</body>
+</html>

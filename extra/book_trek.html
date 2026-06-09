@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Trek</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <h2>Book Trek</h2>
+  <form action="../php/book_trek.php" method="POST">
+    <input type="hidden" name="trek_id" id="trek_id">
+    <button type="submit">Confirm Booking</button>
+  </form>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById('trek_id').value = urlParams.get('trek_id');
+  </script>
+</body>
+</html>

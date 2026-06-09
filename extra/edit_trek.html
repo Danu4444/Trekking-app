@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Edit Trek</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <h2>Edit Trek</h2>
+  <form id="editForm" action="../../php/edit_trek.php" method="POST">
+    <input type="hidden" name="trek_id" id="trek_id">
+    <input type="text" name="name" id="name" placeholder="Trek Name" required><br>
+    <input type="text" name="location" id="location" placeholder="Location" required><br>
+    <input type="text" name="difficulty" id="difficulty" placeholder="Difficulty" required><br>
+    <input type="date" name="date" id="date" required><br>
+    <input type="number" name="price" id="price" placeholder="Price" required><br>
+    <textarea name="description" id="description" placeholder="Description" required></textarea><br>
+    <button type="submit">Update Trek</button>
+  </form>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const trekId = params.get("id");
+
+    fetch(`../../php/trek_details.php?id=${trekId}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('trek_id').value = data.trek_id;
+        document.getElementById('name').value = data.name;
+        document.getElementById('location').value = data.location;
+        document.getElementById('difficulty').value = data.difficulty;
+        document.getElementById('date').value = data.date;
+        document.getElementById('price').value = data.price;
+        document.getElementById('description').value = data.description;
+      });
+  </script>
+</body>
+</html>

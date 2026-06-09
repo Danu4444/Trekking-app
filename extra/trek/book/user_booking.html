@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book a Trek</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef2f7;
+      padding: 30px;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    input[type="submit"] {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #219150;
+    }
+  </style>
+</head>
+<body>
+  <h2 align="center">Book Your Trek</h2>
+  <form action="book_trek.php" method="POST">
+    <label>Your Name:</label>
+    <input type="text" name="username" required>
+
+    <label>Your Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Select Trek:</label>
+    <select name="trek_code" required>
+      <option value="">-- Select a Trek --</option>
+      <?php
+        // PHP inside HTML: fetch treks from DB
+        $conn = new mysqli("localhost", "root", "", "mtkinitecs");
+        $result = $conn->query("SELECT trek_code, name FROM treks");
+        while ($row = $result->fetch_assoc()) {
+          echo "<option value='{$row['trek_code']}'>{$row['name']} ({$row['trek_code']})</option>";
+        }
+        $conn->close();
+      ?>
+    </select>
+
+    <input type="submit" value="Book Now">
+  </form>
+</body>
+</html>

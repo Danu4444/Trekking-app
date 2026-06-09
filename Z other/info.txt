@@ -1,0 +1,31 @@
+
+1. http://localhost/mt_kinetics/logout.html     ---------->   indexpage
+
+
+2. http://localhost/mt_kinetics/login.html     ---------->   loginpage
+
+
+trek names to add..........
+
+Mullayanagiri
+Chikkamagaluru
+Trek to the highest peak in Karnataka through serene coffee plantations, misty trails, and panoramic hilltop views.
+
+
+Ranipuram Hills 
+ Kasaragod 
+A peaceful and less-explored trek with rolling meadows and cloud-kissed ridges on the Kerala–Karnataka border.
+
+Kudremukh Trek
+Karnataka
+Famous for its horse-face shaped peak, this trail winds through dense forests and vast grasslands within a protected national park.
+
+Kedarkantha Trek
+Uttarakhand 
+A snow-covered winter trek ideal for beginners, offering stunning Himalayan views, pine forests, and frozen trails.
+
+Roopkund Trek 
+Uttarakhand 
+Known for its mysterious skeleton lake, this high-altitude trek passes through alpine meadows, Bugyals, and glaciers.
+
+

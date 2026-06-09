@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Treks - Mt. Kinetics</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <img src="../img/logo.jpg" alt="Mt. Kinetics Logo">
+                <h1><span class="highlight">Mt.</span> Kinetics</h1>
+            </div>
+            <nav>
+                <ul>
+    <li><a href="index.html">Home</a></li>
+        <li><a href="book_trek.html">Book Trek</a></li> 
+      <li><a href="profile.html">Update Profile</a></li>
+      <li><a href="cancel_booking.html">Bookings</a></li>
+      <li><a href="about.html">About Us</a></li>
+    <li><a href="../logout.php">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="main-content">
+            <div class="intro-section">
+                <h2>Our Exciting Trek Catalog</h2>
+                <p>
+                    Embark on an adventure of a lifetime! Explore our diverse range of treks, meticulously designed to cater to every skill level and aspiration. From serene nature walks to challenging summit expeditions, your next unforgettable journey starts here.
+                </p>
+            </div>
+
+<div class="container">
+  <div id="trek-list" class="trek-list-styled"></div>
+</div>
+
+<script>
+fetch('../php/get_treks.php')
+  .then(response => response.json())
+  .then(data => {
+    const trekList = document.getElementById('trek-list');
+    trekList.innerHTML = ''; // Clear if already exists
+
+    data.forEach(trek => {
+      const card = document.createElement('div');
+      card.className = 'trek-item';
+
+      card.innerHTML = `
+        <div class="trek-img">
+          <img src="../php/${trek.image_path}" alt="${trek.name}">
+        </div>
+        <div class="trek-info">
+          <h3>${trek.name}</h3>
+          <p><strong>Trek Code:</strong> ${trek.trek_code}</p>
+          <p><strong>Location:</strong> ${trek.location}</p>
+          <p><strong>Date:</strong> ${trek.date}</p>
+          <p><strong>Price:</strong> ₹${trek.price}</p>
+          <p><strong>Description:</strong> ${trek.description}</p>
+          <a href="book_trek.html?name=${encodeURIComponent(trek.name)}&code=${encodeURIComponent(trek.trek_code)}" class="btn" style="margin-top: 10px; display: inline-block;">Book This Trek</a>
+        </div>
+      `;
+
+      trekList.appendChild(card);
+    });
+  })
+  .catch(error => {
+    document.getElementById('trek-list').innerHTML = '<p>Error loading treks.</p>';
+    console.error('Error:', error);
+  });
+</script>
+<div class="call-to-action">
+                <h3>Ready to Book Your Path?</h3>
+                <p>Join the community of explorers who choose Mt. Kinetics for their ultimate mountain experiences.</p>
+                <a href="book_trek.html" class="btn">Discover Your Next Trek</a>
+            </div>
+  </div>
+   
+    <footer>
+        <p>Mt. Kinetics &copy; 2025</p>
+    </footer>
+</body>
+</html>

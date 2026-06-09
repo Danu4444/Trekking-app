@@ -1,0 +1,78 @@
+-- Create the database
+DROP DATABASE IF EXISTS mt_kinetics;
+CREATE DATABASE mt_kinetics CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE mt_kinetics;
+
+-- Drop and Create Admins Table
+DROP TABLE IF EXISTS `admins`;
+CREATE TABLE `admins` (
+  `admin_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`admin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Insert a default admin (admin@gmail.com / admin123)
+INSERT INTO `admins` (`name`, `email`, `password`)
+VALUES ('admin', 'admin@gmail.com', '$2y$10$/JyrQCeJbrDvkyHYLADgEOKFSWp9IcHPK0KCZf1mcDrb90GrX4Kty');
+
+-- Drop and Create Users Table
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `phone_number` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- INSERT USERS (hari@gmail.com and ravi@gmail.com / user123)
+INSERT INTO `users` (`name`, `email`, `password`, `phone_number`)
+VALUES 
+('Hari Kumar', 'hari@gmail.com', '$2y$10$GWPg9ad43giXcrPdLOPdYuGZ2bNkqda5dpTHnBO.pRifbXw2X9o0m', '9876543210'),
+('Ravi Menon', 'ravi@gmail.com', '$2y$10$u1R1k.9AEglWQ5R3DjDQ4O9QEGjA5Gx6Nztr9Zl5DDwQSG5kuPFGe', '9845678901');
+
+-- Drop and Create Treks Table
+DROP TABLE IF EXISTS `treks`;
+CREATE TABLE `treks` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `trek_code` VARCHAR(50) DEFAULT NULL,
+  `name` VARCHAR(100) DEFAULT NULL,
+  `location` VARCHAR(100) DEFAULT NULL,
+  `date` DATE DEFAULT NULL,
+  `price` INT(11) DEFAULT NULL,
+  `description` TEXT DEFAULT NULL,
+  `image_path` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Drop and Create Bookings Table
+DROP TABLE IF EXISTS `bookings`;
+CREATE TABLE `bookings` (
+  `booking_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11) NOT NULL,
+  `trek_name` VARCHAR(100) DEFAULT NULL,
+  `trek_code` VARCHAR(50) DEFAULT NULL,
+  `num_participants` INT(11) DEFAULT NULL,
+  `comments` TEXT DEFAULT NULL,
+  `status` VARCHAR(20) DEFAULT 'Pending',
+  `booking_date` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`booking_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `treks` (`trek_code`, `name`, `location`, `date`, `price`, `description`, `image_path`)
+VALUES
+('TREK20250625150935', 'Mullayanagiri', 'Chikmagalur, Karnataka', '2025-07-15', 2500, 'Highest peak in Karnataka offering scenic views and a thrilling trail.', '../img/kottebeta.jpg'),
+('TREK20250625151357', 'Ranipuram Hills', 'Kasaragod, Kerala', '2025-07-20', 1800, 'A lush green trail through the hills of the Western Ghats.', '../img/first.jpg'),
+('TREK20250701090000', 'Kodachadri Trek', 'Shimoga, Karnataka', '2025-08-01', 2200, 'Trek through forests and waterfalls to a stunning hilltop.', '../img/visit.jpg'),
+('TREK20250705100000', 'Chembra Peak', 'Wayanad, Kerala', '2025-08-05', 2000, 'Popular for the heart-shaped lake and panoramic views.', '../img/lakestrek.jpg'),
+('TREK20250710103000', 'Tadiandamol Trek', 'Coorg, Karnataka', '2025-08-10', 2300, 'Second highest peak in Karnataka, ideal for beginners and nature lovers.', '../img/beta.jpg');
+
+-- INSERT BOOKINGS
+INSERT INTO `bookings` (`user_id`, `trek_name`, `trek_code`, `num_participants`, `comments`, `status`, `booking_date`)
+VALUES 
+(1, 'Ranipuram Hills', 'TREK20250625151357', 4, 'To visit.', 'Pending', NOW()),
+(2, 'Mullayanagiri', 'TREK20250625150935', 3, 'More information', 'Pending', NOW());

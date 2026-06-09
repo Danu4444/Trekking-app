@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Removed - Admin - Mt. Kinetics</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific styles for this page */
+        .removal-message-section {
+            text-align: center;
+            padding: 80px 20px;
+            font-size: 1.2em;
+            color: #2c3e50;
+            background-color: #ffe0e0; /* Light red/pink for a warning/removed state */
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            max-width: 700px;
+            margin: 80px auto;
+            border: 2px solid #dc3545; /* Red border */
+        }
+        .removal-message-section h2 {
+            font-family: 'Poppins', sans-serif;
+            color: #dc3545; /* Red heading */
+            font-size: 2.5em;
+            margin-bottom: 25px;
+        }
+        .removal-message-section p {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .removal-message-section .btn {
+            margin: 0 10px; /* Space between buttons */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <img src="logo.jpg" alt="Mt. Kinetics Logo">
+                <h1><span class="highlight">Mt.</span> Kinetics</h1>
+            </div>
+            <nav>
+                <ul>
+                      <li><a href="admin_update_treks.html">Update Treks</a></li>
+                    <li>  <a href="admin_manage_users.html">Manage Users</a></li>
+                    <li></li><a href="admin_manage_bookins.html" >Manage Booking</a></li>
+                    <li><a href="logout.html">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="main-content">
+            <div class="removal-message-section">
+                <h2>User Successfully Rejected!</h2>
+                <p>
+                    The user account with the has been Rejected
+                    This action cannot be undone.
+                </p>
+                <div class="confirmation-actions">
+                    <a href="admin_manage_bookins.html" class="btn btn-warning">Go Back to Manage Bookings</a>
+                    <a href="admin_dashboard.html" class="btn">Back to Admin Dashboard</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Mt. Kinetics &copy; 2025</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Retrieve details from localStorage if stored by the admin_manage_users page
+            const removedUserDetails = JSON.parse(localStorage.getItem('removedUserDetails'));
+
+            if (removedUserDetails) {
+                document.getElementById('removed-username').textContent = removedUserDetails.username || 'N/A';
+                document.getElementById('removed-userid').textContent = removedUserDetails.userId || 'N/A';
+                // Clear the stored details after displaying them
+                localStorage.removeItem('removedUserDetails');
+            } else {
+                // Fallback message if no details are found (e.g., page accessed directly)
+                document.getElementById('removed-username').textContent = 'a specific user';
+                document.getElementById('removed-userid').textContent = 'N/A';
+            }
+        });
+    </script>
+</body>
+</html>

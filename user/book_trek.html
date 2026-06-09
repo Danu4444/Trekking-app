@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Trek - Mt. Kinetics</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div id="branding">
+        <img src="../img/logo.jpg" alt="Mt. Kinetics Logo" />
+        <h1><span class="highlight">Mt.</span> Kinetics</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="view_treks.html">View Treks</a></li>
+          <li><a href="cancel_booking.html">Bookings</a></li>
+          <li><a href="profile.html">Update Profile</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="../logout.php">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="main-content">
+      <div class="intro-section">
+        <h2>Secure Your Trekking Adventure!</h2>
+        <p>
+          You are just a few steps away from confirming your exciting journey with Mt. Kinetics.
+        </p>
+        <p>Booking for: <strong id="selected-trek-name">Everest Base Camp</strong></p>
+      </div>
+
+      <div class="booking-form-section">
+        <h3>Enter Your Booking Details</h3>
+        <form action="../php/book_trek.php" method="post" id="bookingForm">
+          <div class="form-group">
+            <label for="trek_name">Trek Name:</label>
+            <input type="text" id="trek_name" name="trek_name" required />
+          </div>
+          <div class="form-group">
+            <label for="trek_code">Trek Code:</label>
+            <input type="text" id="trek_code" name="trek_code" required />
+          </div>
+          <div class="form-group">
+            <label for="email">User Email:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="num_participants">Number of Participants:</label>
+            <input type="number" id="num_participants" name="num_participants" min="1" value="1" required />
+          </div>
+          <div class="form-group">
+            <label for="comments">Any Special Requests/Comments:</label>
+            <textarea id="comments" name="comments" rows="5" placeholder="e.g., dietary restrictions, medical conditions..."></textarea>
+          </div>
+          <input type="submit" value="Book Now" class="btn" />
+          <h2 align="center">Book Your Trek</h2>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>Mt. Kinetics &copy; 2025</p>
+  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Prefill Trek details from URL parameters
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get('name');
+      const code = params.get('code');
+      
+      const trekNameInput = document.getElementById('trek_name');
+      const trekCodeInput = document.getElementById('trek_code');
+      const selectedTrekHeader = document.getElementById('selected-trek-name');
+      
+      if (name && code) {
+        trekNameInput.value = name;
+        trekCodeInput.value = code;
+        selectedTrekHeader.textContent = name;
+      } else {
+        selectedTrekHeader.textContent = 'None Selected';
+      }
+
+      // 2. Prefill User email from profile session
+      fetch('../php/get_profile.php')
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            document.getElementById('email').value = data.user.email;
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching user profile for booking:', error);
+        });
+    });
+  </script>
+</body>
+</html>

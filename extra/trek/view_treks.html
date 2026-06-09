@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Available Treks</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f7;
+      padding: 20px;
+    }
+    h2 {
+      color: #2c3e50;
+    }
+    .trek-card {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .trek-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .trek-code {
+      font-weight: bold;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h2>Available Treks</h2>
+  <div id="trek-list"></div>
+
+  <script>
+    fetch('../php/get_treks.php')
+      .then(response => response.json())
+      .then(data => {
+        const trekList = document.getElementById('trek-list');
+        data.forEach(trek => {
+          const card = document.createElement('div');
+          card.className = 'trek-card';
+          card.innerHTML = `
+            <img src="${trek.image_path}" alt="Trek Image">
+            <div class="trek-code">Trek Code: ${trek.trek_code}</div>
+            <h3>${trek.name}</h3>
+            <p><strong>Location:</strong> ${trek.location}</p>
+            <p><strong>Date:</strong> ${trek.date}</p>
+            <p><strong>Price:</strong> ₹${trek.price}</p>
+            <p><strong>Description:</strong> ${trek.description}</p>
+          `;
+          trekList.appendChild(card);
+        });
+      });
+  </script>
+</body>
+</html>

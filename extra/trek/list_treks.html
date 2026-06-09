@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Manage Treks</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <h2>Trek Listings</h2>
+  <a href="add_trek.html">+ Add New Trek</a>
+  <div id="trek-list"></div>
+
+  <script>
+    fetch('../../php/fetch_treks.php')
+    .then(res => res.json())
+    .then(treks => {
+      let html = '';
+      treks.forEach(trek => {
+        html += `
+          <div>
+            <h3>${trek.name}</h3>
+            <p>${trek.location} | ${trek.date}</p>
+            <a href="edit_trek.html?id=${trek.trek_id}">Edit</a> |
+            <a href="../../php/delete_trek.php?id=${trek.trek_id}">Delete</a>
+          </div>`;
+      });
+      document.getElementById('trek-list').innerHTML = html;
+    });
+  </script>
+</body>
+</html>

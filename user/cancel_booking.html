@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cancel Bookings - Mt. Kinetics</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div id="branding">
+        <img src="../img/logo.jpg" alt="Mt. Kinetics Logo" />
+        <h1><span class="highlight">Mt.</span> Kinetics</h1>
+      </div>
+      <nav>
+        <ul>
+         <li><a href="index.html">Home</a></li>
+        <li><a href="view_treks.html">View Treks</a></li>
+        <li><a href="book_trek.html">Book Trek</a></li> 
+      <li><a href="profile.html">Update Profile</a></li>
+       <li><a href="about.html">About Us</a></li>
+    <li><a href="../logout.php">Logout</a></li>
+    </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="main-content">
+      <div class="intro-section">
+        <h2>Cancel Trek Bookings</h2>
+        <p>Below is a list of all bookings. You can cancel any booking if needed.</p>
+      </div>
+
+      <div id="booking-list" class="trek-list-styled"></div>
+    </section>
+  </div>
+
+  <script>
+    fetch('../php/get-bookings.php')
+      .then(response => response.json())
+      .then(data => {
+        const bookingList = document.getElementById('booking-list');
+        bookingList.innerHTML = '';
+
+        if (data.length === 0) {
+          bookingList.innerHTML = '<p>No bookings found.</p>';
+          return;
+        }
+
+        data.forEach(booking => {
+          const card = document.createElement('div');
+          card.className = 'trek-item';
+
+          card.innerHTML = `
+            <div class="trek-info">
+              <h3>${booking.trek_name}</h3>
+              <p><strong>Booked By:</strong> ${booking.user_name}</p>
+              <p><strong>Email:</strong> ${booking.user_email}</p>
+              <p><strong>Date:</strong> ${booking.booking_date}</p>
+              <form method="post" action="../php/cancel_booking.php" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                <input type="hidden" name="booking_id" value="${booking.booking_id}">
+                <button type="submit" class="btn btn-danger">Cancel Booking</button>
+              </form>
+            </div>
+          `;
+          bookingList.appendChild(card);
+        });
+      })
+      .catch(error => {
+        document.getElementById('booking-list').innerHTML = '<p>Error fetching bookings.</p>';
+        console.error('Error:', error);
+      });
+  </script>
+
+  <footer>
+    <p>Mt. Kinetics &copy; 2025</p>
+  </footer>
+</body>
+</html>

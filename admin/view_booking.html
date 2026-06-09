@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Bookings - Mt. Kinetics</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div id="branding">
+        <img src="../img/logo.jpg" alt="Mt. Kinetics Logo" />
+        <h1><span class="highlight">Mt.</span> Kinetics</h1>
+      </div>
+      <nav>
+        <ul>
+        <li><a href="index.html"> Home</a></li> 
+        <li><a href="view_treks.html">View Treks</a></li>
+         <li><a href="treks/add_trek.html">Add Treks</a></li> 
+      <li><a href="users/user.html">Users</a></li>
+    <li><a href="../logout.php">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="main-content">
+      <div class="intro-section">
+        <h2>Manage Trek Bookings</h2>
+        <p>
+          View all trek bookings below. You can approve or cancel any booking request made by users.
+        </p>
+      </div>
+
+      <div class="container">
+        <div id="booking-list" class="trek-list-styled"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    fetch('../php/get_bookings.php')
+      .then(response => response.json())
+      .then(data => {
+        const bookingList = document.getElementById('booking-list');
+        bookingList.innerHTML = '';
+
+        if (data.length === 0) {
+          bookingList.innerHTML = '<p>No bookings found.</p>';
+          return;
+        }
+
+        data.forEach(booking => {
+          const card = document.createElement('div');
+          card.className = 'trek-item';
+
+          card.innerHTML = `
+            <div class="trek-info">
+              <h3>${booking.trek_name}</h3>
+              <p><strong>User Email:</strong> ${booking.email}</p>
+              <p><strong>Trek Code:</strong> ${booking.trek_code}</p>
+              <p><strong>Participants:</strong> ${booking.num_participants}</p>
+              <p><strong>Comments:</strong> ${booking.comments || 'None'}</p>
+              <p><strong>Status:</strong> ${booking.status}</p>
+              ${
+                booking.status === 'Pending'
+                  ? `
+                <form method="post" action="approve_booking.php" style="display:inline-block;">
+                  <input type="hidden" name="booking_id" value="${booking.booking_id}" />
+                  <button type="submit">Approve</button>
+                </form>
+                <form method="post" action="cancel_booking.php" style="display:inline-block;">
+                  <input type="hidden" name="booking_id" value="${booking.booking_id}" />
+                  <button type="submit">Cancel</button>
+                </form>`
+                  : `<p><strong>Action Taken:</strong> ${booking.status}</p>`
+              }
+            </div>
+          `;
+
+          bookingList.appendChild(card);
+        });
+      })
+      .catch(error => {
+        document.getElementById('booking-list').innerHTML = '<p>Error loading bookings.</p>';
+        console.error('Error:', error);
+      });
+  </script>
+
+  <footer>
+    <p>Mt. Kinetics &copy; 2025</p>
+  </footer>
+</body>
+</html>
